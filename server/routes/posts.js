@@ -1,6 +1,14 @@
 import express from 'express';
 
-import { getPostsBySearch, getPosts, createPost, updatePost, deletePost, likePost } from '../controllers/posts.js';
+import {
+	getPostsBySearch,
+	getPosts,
+	getPost,
+	createPost,
+	updatePost,
+	deletePost,
+	likePost,
+} from '../controllers/posts.js';
 import auth from '../middleware/auth.js';
 
 const router = express.Router();
@@ -8,6 +16,7 @@ const router = express.Router();
 // localhost:5000/posts
 router.get('/search', getPostsBySearch);
 router.get('/', getPosts);
+router.get('/:id', getPost);
 router.post('/', auth, createPost);
 router.patch('/:id', auth, updatePost);
 router.delete('/:id', auth, deletePost);
