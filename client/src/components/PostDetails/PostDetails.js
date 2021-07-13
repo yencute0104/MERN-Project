@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
-import { Paper, Typography, CircularProgress, Divider } from '@material-ui/core';
+import { Paper, Typography, CircularProgress, Divider } from '@material-ui/core/';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { useParams, useHistory } from 'react-router-dom';
 
-import useStyles from './styles';
 import { getPost, getPostsBySearch } from '../../actions/posts';
-const PostDetails = () => {
+import useStyles from './styles';
+
+const Post = () => {
 	const { post, posts, isLoading } = useSelector((state) => state.posts);
 	const dispatch = useDispatch();
 	const history = useHistory();
@@ -25,6 +26,8 @@ const PostDetails = () => {
 
 	if (!post) return null;
 
+	const openPost = (_id) => history.push(`/posts/${_id}`);
+
 	if (isLoading) {
 		return (
 			<Paper elevation={6} className={classes.loadingPaper}>
@@ -34,9 +37,6 @@ const PostDetails = () => {
 	}
 
 	const recommendedPosts = posts.filter(({ _id }) => _id !== post._id);
-	console.log(recommendedPosts);
-
-	const openPost = (id) => history.push(`/posts/${id}`);
 
 	return (
 		<Paper style={{ padding: '20px', borderRadius: '15px' }} elevation={6}>
@@ -74,14 +74,14 @@ const PostDetails = () => {
 					/>
 				</div>
 			</div>
-			{recommendedPosts.length && (
+			{!!recommendedPosts.length && (
 				<div className={classes.section}>
 					<Typography gutterBottom variant="h5">
-						You might also like:{' '}
+						You might also like:
 					</Typography>
 					<Divider />
 					<div className={classes.recommendedPosts}>
-						{recommendedPosts.map(({ title, message, name, likes, selectedFile, _id }) => (
+						{recommendedPosts.map(({ title, name, message, likes, selectedFile, _id }) => (
 							<div style={{ margin: '20px', cursor: 'pointer' }} onClick={() => openPost(_id)} key={_id}>
 								<Typography gutterBottom variant="h6">
 									{title}
@@ -93,7 +93,7 @@ const PostDetails = () => {
 									{message}
 								</Typography>
 								<Typography gutterBottom variant="subtitle1">
-									{likes.length}
+									Likes: {likes.length}
 								</Typography>
 								<img src={selectedFile} width="200px" />
 							</div>
@@ -105,4 +105,4 @@ const PostDetails = () => {
 	);
 };
 
-export default PostDetails;
+export default Post;

@@ -77,6 +77,7 @@ const Form = ({ currentId, setCurrentId }) => {
 					onChange={(e) => setPostData({ ...postData, message: e.target.value })}
 				/> */}
 				<Editor
+					apiKey="ogkigwhylxdzh2j0a7w7r4u47h8dn6vupjuvkytpqtek7b4m"
 					name="message"
 					variant="outlined"
 					multiline
